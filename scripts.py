@@ -55,7 +55,6 @@ def deleting_comments(schoolkid):
     Chastisement.objects.filter(schoolkid=schoolkid).delete()
 
 
-# create_commendation("Фролов Иван", "Музыка")
 def create_commendation(schoolkid, subject):
     schoolkid = Schoolkid.objects.get(full_name__contains=schoolkid)
     year_of_study = schoolkid.year_of_study
@@ -63,7 +62,7 @@ def create_commendation(schoolkid, subject):
     subject = Subject.objects.get(title=subject, year_of_study=year_of_study)
     lessons = Lesson.objects.filter(subject=subject, year_of_study=year_of_study, group_letter=group_letter)
     while True:
-        lesson = random.choice(lessons)
+        lesson = lessons.order_by('?').first()
         lesson_teacher = lesson.teacher
         lesson_date = lesson.date
         text = random.choice(COMMENDATIONS)
