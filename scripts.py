@@ -9,7 +9,6 @@ import django
 django.setup()
 
 from datacenter.models import Schoolkid, Mark, Chastisement, Lesson, Subject, Commendation
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 COMMENDATIONS = [
     'Молодец!',
