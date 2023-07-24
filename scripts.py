@@ -50,7 +50,7 @@ def fix_marks(schoolkid):
     Mark.objects.filter(schoolkid=schoolkid, points__lt=4).ubdate.points = 5
 
 
-def deleting_comments(schoolkid):
+def delete_comments(schoolkid):
     schoolkid = Schoolkid.objects.get(full_name__contains=schoolkid)
     Chastisement.objects.filter(schoolkid=schoolkid).delete()
 
@@ -112,13 +112,12 @@ if __name__ == "__main__":
         if args.fix_marks:
             fix_marks(args.name)
         if args.deleting_comments:
-            deleting_comments(args.name)
+            delete_comments(args.name)
         if args.create_commendation:
             create_commendation(args.name, args.subject)
-    except ObjectDoesNotExist as error:
-        if 'Schoolkid' in str(error):
-            print('Такого ученика нет, проверьте правильность ввода!')
-        if 'Subject' in str(error):
-            print('Такого предмета нет, проверьте правильность ввода!')
-    except MultipleObjectsReturned:
+    except Schoolkid.DoesNotExist:
+        print('Такого ученика нет, проверьте правильность ввода!')
+    except Subject.DoesNotExist:
+        print('Такого предмета нет, проверьте правильность ввода!')
+    except Schoolkid.MultipleObjectsReturned:
         print('Найдено сразу несколько таких учеников!')
